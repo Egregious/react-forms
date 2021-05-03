@@ -2,8 +2,9 @@ import React from 'react';
 
 class Form extends React.Component {
   state = {
-    firstName: "John",
-    lastName: "Henry"
+    firstName: "",
+    lastName: "",
+    submitData: []
   }
 
   handleFirstNameChange = event => {
@@ -18,11 +19,34 @@ class Form extends React.Component {
     })
   }
 
+  handleSubmit = e => {
+    e.preventDefault()
+    let formData = { firstName: this.state.firstName, lastName: this.state.lastName }
+    const dataArray = this.state.stubmitData.concat(formData)
+    this.setState({
+      submitData: dataArray
+    })
+  }
+
+  listSubmissions = () => {
+    return this.state.submitData.map(data => {
+      return <div><span> { data.firstName } </span> <span> { data.lastName } </span></div>
+    })
+  }
+
   render() {
     return (
       <form>
-        <input type="text" name="firstName" onChange={event => this.handleFirstNameChange(event)} value={this.state.firstName} />
-        <input type="text" name="lastName" onChange={event => this.handleLastNameChange(event)} value={this.state.lastName} />
+        <input type="text" 
+               name="firstName" 
+               onChange={event => this.handleFirstNameChange(event)} 
+               value={this.state.firstName} 
+        />
+        <input type="text" 
+               name="lastName" 
+               onChange={event => this.handleLastNameChange(event)} 
+               value={this.state.lastName} 
+        />
       </form>
     )
   }
